@@ -4,15 +4,15 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 export default function TemaListScreen() {
-  const [Alunos, setAlunos] = useState([]);
+  const [Tema, setTema] = useState([]);
 
   const carregarTema = async () => {
-    const querySnapshot = await getDocs(collection(db, 'Alunos'));
+    const querySnapshot = await getDocs(collection(db, 'Tema'));
     const lista = [];
     querySnapshot.forEach((doc) => {
       lista.push({ id: doc.id, ...doc.data() });
     });
-    setAlunos(lista);
+    setTema(lista);
   };
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function TemaListScreen() {
 
       <Text style={styles.title}>Temas Cadastrados</Text>
       <FlatList
-        data={Alunos}
+        data={Tema}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>

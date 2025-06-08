@@ -8,33 +8,33 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const handleLogin = async () => {
-    if (!email || !senha) {
-      Alert.alert("Erro", "Preencha e-mail e senha.");
+const handleLogin = async () => {
+  if (!email || !senha) {
+    Alert.alert("Erro", "Preencha e-mail e senha.");
+    return;
+  }
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+    const userEmail = userCredential.user.email;
+
+    const q = query(collection(db, 'usuarios'), where('usuario', '==', userEmail));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      Alert.alert("Erro", "Usuário não encontrado no Firestore.");
       return;
     }
 
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, senha);
-      const userEmail = userCredential.user.email;
+    const userTipo = querySnapshot.docs[0].data().tipo;
+    navigation.navigate('Main', { tipo: userTipo });
 
-      const q = query(collection(db, 'usuarios'), where('usuario', '==', userEmail));
-      const querySnapshot = await getDocs(q);
+  } catch (error) {
+    console.error(error);
+    Alert.alert("Erro", "Falha no login. Verifique o e-mail e senha.");
+  }
+};
 
-      if (querySnapshot.empty) {
-        console.log("usuario nao encontrato no firestore")
-        Alert.alert("Erro", "Usuário não encontrado no Firestore.");
-        return;
-      }
-
-      console.log("usuario encontrado")
-      navigation.navigate('Main');
-
-    } catch (error) {
-      console.error(error);
-      Alert.alert("Erro", "Falha no login. Verifique o e-mail e senha.");
-    }
-  };
 
   return (
     <View style={styles.container}>

@@ -26,7 +26,7 @@ export default function FormTrabalhoScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Cadastrar Aluno</Text>
+            <Text style={styles.title}>Cadastrar Trabalho</Text>
             <TextInput placeholder="Nome do Aluno" style={styles.input} value={nomeAluno} onChangeText={setNomeAluno} />
             <TextInput placeholder="Nome do Trabalho" style={styles.input} value={nomeTrabalho} onChangeText={setnomeTrabalho} />
             <TextInput placeholder="Periodo" style={styles.input} value={valorPeriodo} onChangeText={setValorPeriodo} />
