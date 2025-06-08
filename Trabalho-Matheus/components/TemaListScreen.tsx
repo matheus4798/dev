@@ -3,36 +3,35 @@ import { View, Text,  FlatList, StyleSheet, TouchableOpacity } from 'react-nativ
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
-export default function AlugueisScreen() {
-  const [alugueis, setAlugueis] = useState([]);
+export default function TemaListScreen() {
+  const [Alunos, setAlunos] = useState([]);
 
-  const carregarAlugueis = async () => {
-    const querySnapshot = await getDocs(collection(db, 'alugueis'));
+  const carregarTema = async () => {
+    const querySnapshot = await getDocs(collection(db, 'Alunos'));
     const lista = [];
     querySnapshot.forEach((doc) => {
       lista.push({ id: doc.id, ...doc.data() });
     });
-    setAlugueis(lista);
+    setAlunos(lista);
   };
 
   useEffect(() => {
-    carregarAlugueis();
+    carregarTema();
   }, []);
 
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>Alugueis Cadastrados</Text>
+      <Text style={styles.title}>Temas Cadastrados</Text>
       <FlatList
-        data={alugueis}
+        data={Alunos}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.cardText}>{item.nomeCliente}</Text>
-            <Text>{item.nomeCarro}</Text>
-            <Text>{item.data}</Text>
-            <Text>{item.valorAluguel}</Text>
- 
+            <Text style={styles.cardText}>Nome:{item.nomeTema}</Text>
+            <Text style={styles.itemText}>Curso:{item.nomeCurso}</Text>
+            <Text style={styles.itemText}>Períodor:{item.valorPeriodo}</Text>
+
           </View>
         )}
       />
@@ -46,5 +45,6 @@ const styles = StyleSheet.create({
   input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 10, marginTop: 10 },
   card: { marginTop: 10, padding: 10, borderWidth: 1, borderColor: '#ddd', borderRadius: 6 },
   cardText: { fontWeight: 'bold' },
-  delete: { color: 'red', marginTop: 5 }
+  delete: { color: 'red', marginTop: 5 },
+  itemText: {fontSize: 16}
 });

@@ -23,8 +23,7 @@ export default function RegisterScreen({ navigation }) {
       await addDoc(collection(db, 'usuarios'), {
         nome,
         usuario,
-        tipo, // 👈 salva o tipo de usuário
-        // ⚠️ não é recomendável salvar a senha no Firestore
+        tipo,
       });
 
       Alert.alert("Sucesso", "Usuário criado com sucesso!");
@@ -76,7 +75,6 @@ export default function RegisterScreen({ navigation }) {
       >
         <Picker.Item label="Aluno" value="aluno" />
         <Picker.Item label="Administrador" value="administrador" />
-        <Picker.Item label="Avaliador" value="avaliador" />
       </Picker>
 
       <Button title="Cadastrar" onPress={handleSubmit} />

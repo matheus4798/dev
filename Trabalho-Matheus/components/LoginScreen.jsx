@@ -26,10 +26,10 @@ export default function LoginScreen({ navigation }) {
         Alert.alert("Erro", "Usuário não encontrado no Firestore.");
         return;
       }
-      
+
       console.log("usuario encontrado")
       navigation.navigate('Main');
-      
+
     } catch (error) {
       console.error(error);
       Alert.alert("Erro", "Falha no login. Verifique o e-mail e senha.");
