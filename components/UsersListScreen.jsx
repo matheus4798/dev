@@ -39,7 +39,7 @@ export default function UsersListScreen() {
           <View style={styles.item}>
             <Text style={styles.itemText}>Nome: {item.nome}</Text>
             <Text style={styles.itemText}>Usuário: {item.usuario}</Text>
-            <Text style={styles.itemText}>Idade: {item.idade}</Text>
+            <Text style={styles.itemText}>tipo: {item.tipo}</Text>
           </View>
         )}
         ListEmptyComponent={<Text>Nenhum usuário cadastrado.</Text>}

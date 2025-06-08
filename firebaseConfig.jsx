@@ -3,13 +3,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth"; 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAD2mC0EH3PTRK7QW33Dt27rBSKXyKcIDc",
-  authDomain: "prova2-rafael.firebaseapp.com",
-  projectId: "prova2-rafael",
-  storageBucket: "prova2-rafael.firebasestorage.app",
-  messagingSenderId: "401158866147",
-  appId: "1:401158866147:web:db95a8677a7a82f78f71d6",
-  measurementId: "G-N12SS4RVK2"
+  apiKey: "AIzaSyDJEsLK9oQKf1tPzmrNskudOs5PWg240y4",
+  authDomain: "apppiunipam-matheus.firebaseapp.com",
+  projectId: "apppiunipam-matheus",
+  storageBucket: "apppiunipam-matheus.firebasestorage.app",
+  messagingSenderId: "192970524974",
+  appId: "1:192970524974:web:df9413519357bf8e86d2bf",
+  measurementId: "G-RLVCCGWWTQ"
 };
 const app = initializeApp(firebaseConfig);
 
