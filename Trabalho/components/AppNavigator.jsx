@@ -2,6 +2,7 @@ import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import RegisterScreen from "./RegisterScreen";
 import UsersListScreen from "./UsersListScreen";
@@ -20,7 +21,57 @@ function MainTabs({ route }) {
   const tipo = route?.params?.tipo;
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: '#34a853',
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          backgroundColor: '#f5f5f5',
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+          height: 70,
+          marginHorizontal: 10,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: 'bold'
+        },
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          switch (route.name) {
+            case 'Cadastrar Usuários':
+              iconName = 'person-add-outline';
+              break;
+            case 'Listar Usuários':
+              iconName = 'people-outline';
+              break;
+            case 'Cadastrar Tema':
+              iconName = 'document-text-outline';
+              break;
+            case 'Cadastro de Alunos':
+              iconName = 'person-outline';
+              break;
+            case 'Lista de Tema do PI':
+              iconName = 'list-circle-outline';
+              break;
+            case 'Lista de Alunos':
+              iconName = 'school-outline';
+              break;
+            case 'Cadastro Trabalho':
+              iconName = 'create-outline';
+              break;
+            case 'Lista Trabalhos':
+              iconName = 'folder-open-outline';
+              break;
+            default:
+              iconName = 'ellipse-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        }
+      })}
+    >
       {tipo === 'administrador' && (
         <>
           <Tab.Screen name="Cadastrar Usuários" component={RegisterScreen} />
@@ -29,7 +80,6 @@ function MainTabs({ route }) {
           <Tab.Screen name="Cadastro de Alunos" component={AlunosFormScreen} />
         </>
       )}
-      {/* Visível para todos */}
       <Tab.Screen name="Lista de Tema do PI" component={TemaListScreen} />
       <Tab.Screen name="Lista de Alunos" component={AlunosListScreen} />
       <Tab.Screen name="Cadastro Trabalho" component={FormTrabalhoScreen} />
