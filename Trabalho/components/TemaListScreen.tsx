@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { collection, getDocs } from 'firebase/firestore';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 export default function TemaListScreen() {
@@ -19,6 +19,24 @@ export default function TemaListScreen() {
     carregarTema();
   }, []);
 
+  const excluirTema = (id) => {
+    Alert.alert(
+      "Excluir Tema",
+      "Tem certeza que deseja excluir este tema?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Excluir",
+          style: "destructive",
+          onPress: async () => {
+            await deleteDoc(doc(db, 'Tema', id));
+            setTema((prev) => prev.filter((t) => t.id !== id));
+          }
+        }
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Temas Cadastrados</Text>
@@ -27,9 +45,14 @@ export default function TemaListScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Nome: {item.nomeTema}</Text>
-            <Text style={styles.cardText}>Curso: {item.nomeCurso}</Text>
-            <Text style={styles.cardText}>Período: {item.valorPeriodo}</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.cardTitle}>Nome: {item.nomeTema}</Text>
+              <Text style={styles.cardText}>Curso: {item.nomeCurso}</Text>
+              <Text style={styles.cardText}>Período: {item.valorPeriodo}</Text>
+            </View>
+            <TouchableOpacity style={styles.deleteButton} onPress={() => excluirTema(item.id)}>
+              <Text style={styles.deleteButtonText}>Excluir</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -38,19 +61,11 @@ export default function TemaListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: '#e6f4ea'
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#34a853',
-    marginBottom: 24,
-    textAlign: 'center'
-  },
+  container: { flex: 1, padding: 24, backgroundColor: '#e6f4ea' },
+  title: { fontSize: 28, fontWeight: 'bold', color: '#34a853', marginBottom: 24, textAlign: 'center' },
   card: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: 16,
@@ -61,14 +76,14 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2
   },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1e1e1e',
-    marginBottom: 4
+  cardTitle: { fontSize: 18, fontWeight: 'bold', color: '#1e1e1e', marginBottom: 4 },
+  cardText: { fontSize: 16, color: '#333' },
+  deleteButton: {
+    backgroundColor: '#e53935',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    marginLeft: 16
   },
-  cardText: {
-    fontSize: 16,
-    color: '#333'
-  }
+  deleteButtonText: { color: '#fff', fontWeight: 'bold' }
 });
